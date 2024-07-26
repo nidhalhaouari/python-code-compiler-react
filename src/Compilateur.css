@@ -1,0 +1,9 @@
+.code-editor {
+    height: 300px;
+}
+.output-console {
+    background-color: #000;
+    color: #fff;
+    height: 300px;
+    overflow-y: auto;
+}

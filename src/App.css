@@ -1,0 +1,22 @@
+
+p.fw-bolder {
+  text-align: center;   /* Centre le texte horizontalement */
+  font-size: 2em;       /* Agrandit le texte (vous pouvez ajuster la taille) */
+  font-weight: bold;    /* Rend le texte en gras */
+  margin-top: 5vh;     /* Centre verticalement (ajuster si nécessaire) */
+  transform: translateY(-50%);  /* Ajuste la position verticale */
+}
+p.font-monospace{
+  text-align: center;   /* Centre le texte horizontalement */
+  font-weight: bold;    /* Rend le texte en gras */
+  margin-top: 5vh;     /* Centre verticalement (ajuster si nécessaire) */
+  transform: translateY(-50%);  /* Ajuste la position verticale */
+}
+
+
+
+
+
+
+
+
