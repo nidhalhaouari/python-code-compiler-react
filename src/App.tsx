@@ -1,47 +1,42 @@
-import { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  BrowserRouter,
-} from "react-router-dom";
-
-import reactLogo from "./assets/react.svg";
-import "./App.css";
-import NavBar from "./NavBar";
-import Convertion from "./Convertion";
-import Login from "./Login"; // Assurez-vous que ce fichier existe
-import Register from "./Register";
-import useToken from "./useToken";
-import Profile from "./Profile";
-import Compilateur from "./Compilateur";
+// App.tsx
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Convertion from './Convertion';
+import Login from './Login';
+import Register from './Register';
+import Profile from './Profile';
+import Compilateur from './Compilateur';
+import PrivateRoute from './PrivateRoute';
+import useToken from './useToken';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  const { token, removeToken, setToken } = useToken();
+  const { token, setToken } = useToken();
 
-const handleToken = () => {
-  setToken("");
-};
   return (
-    <>
-      <BrowserRouter>
-        {!token && token !== "" && token !== undefined ? 
-          <Login setToken={setToken} />
-         : (
-          <Routes>
-            <Route path="/convertion" element={<Convertion />} />
-            <Route path="/compilateur" element={<Compilateur />} />
-            <Route path="/profile" element={<Profile token={token}  setToken={setToken} />} />
-            <Route path="/" element={<Login setToken={setToken} />} />
-            <Route
-              path="/profile"
-              element={<Profile token={token} setToken={setToken} />}
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login setToken={setToken} />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute
+              element={<Profile token={token ?? ''} setToken={setToken} />}
+              token={token}
             />
-            <Route path="/Register" element={<Register />} />
-          </Routes>
-        )}
-      </BrowserRouter>
-    </>
+          }
+        />
+        <Route
+          path="/convertion"
+          element={<PrivateRoute element={<Convertion />} token={token} />}
+        />
+        <Route
+          path="/compilateur"
+          element={<PrivateRoute element={<Compilateur />} token={token} />}
+        />
+      </Routes>
+    </Router>
   );
 }
 

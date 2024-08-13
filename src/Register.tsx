@@ -21,7 +21,7 @@ function Register() {
       .then(function (response) {
         console.log(response);
         alert("c bn");
-        navigate("/login");
+        navigate("/");
       })
       .catch(function (error) {
         console.log(error, "error");

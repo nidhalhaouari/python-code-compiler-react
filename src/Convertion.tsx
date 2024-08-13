@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./Convertion.css";
 import NavBar from "./NavBar";
-import useToken from "./useToken";
 
 const Convertion: React.FC = () => {
   const [text, setText] = useState<string>("");
@@ -41,7 +40,6 @@ const Convertion: React.FC = () => {
       formData.append("file", file);
     }
     try {
-
       const response = await axios.post(
         "http://127.0.0.1:5000/generate_pdf",
         formData,
@@ -49,7 +47,7 @@ const Convertion: React.FC = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-          responseType: "blob", // important pour recevoir un fichier Blob en réponse
+          responseType: "blob",
         }
       );
 
@@ -68,42 +66,41 @@ const Convertion: React.FC = () => {
   return (
     <>
       <NavBar token={handleToken} />
-      <div className="container">
-        <p className="font-monospace">
-          This online Text to PDF converter free and accurately converts txt
-          files to PDF formats. To use this tool, copy-paste text or select a
-          .txt file to upload. Next, click on the Covert button to convert the
-          text file with high accuracy.
-        </p>
+      <div className="container mt-4">
+        <div className="converter-description text-center">
+          <p className="font-monospace">
+            Convert text to PDF with ease! Upload a .txt file or write/paste your text
+            below, and click 'Convert' to download the PDF.
+          </p>
+        </div>
         <div className="row justify-content-center">
-          <div className="col-24 col-sm-12 text-center mx-auto">
-            <div className="alert shadow" role="alert">
+          <div className="col-lg-8 col-md-10 col-sm-12 text-center mx-auto">
+            <div className="converter-card shadow-lg p-4 rounded">
               <form onSubmit={handleSubmit}>
-                <div className="row">
-                  <div className="col">
-                    <div className="form-floating">
-                      <textarea
-                        name="text1"
-                        rows={16}
-                        cols={169}
-                        placeholder="Drag and drop file or write text"
-                        value={text}
-                        onChange={handleTextChange}
-                      ></textarea>
-                    </div>
+                <div className="mb-4">
+                  <div className="form-floating">
+                    <textarea
+                      className="form-control rounded"
+                      name="text1"
+                      rows={16}
+                      placeholder="Write text or drag and drop file"
+                      value={text}
+                      onChange={handleTextChange}
+                      style={{ minHeight: "400px" }}
+                    ></textarea>
+                    <label htmlFor="text1">Write text or drag and drop file</label>
                   </div>
                 </div>
-                <br />
-                <div className="input-group mb-3">
-                  <button type="submit" className="btn btn-dark w-25">
-                    Convertir
-                  </button>
+                <div className="input-group">
                   <input
                     type="file"
                     className="form-control"
                     id="inputGroupFile01"
                     onChange={handleFileChange}
                   />
+                  <button type="submit" className="btn btn-primary">
+                    Convert
+                  </button>
                 </div>
               </form>
             </div>

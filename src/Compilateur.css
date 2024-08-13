@@ -1,9 +1,81 @@
+
 .code-editor {
-    height: 300px;
-}
-.output-console {
-    background-color: #000;
-    color: #fff;
-    height: 300px;
-    overflow-y: auto;
-}
+    height: 60vh;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  .output-console {
+    background-color: #000; /* Couleur de fond noire */
+    color: #fff; /* Couleur du texte blanche pour un bon contraste */
+    font-size: 12px; /* Taille de la police plus petite */
+    border: 1px solid #ddd; /* Bordure grise */
+    border-radius: 4px; /* Coins arrondis */
+    padding: 10px; /* Espacement interne */
+    height: 10vh; /* Hauteur de l'élément */
+    overflow: auto; /* Barre de défilement si le contenu dépasse */
+  }
+  
+  
+  .theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    margin-top: 2rem; /* marge supérieure comme dans le bouton d'origine */
+  }
+  
+  .theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px; /* Réduit la largeur du switch */
+    height: 20px; /* Réduit la hauteur du switch */
+  }
+  
+  .theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000000;
+    transition: .4s;
+    border-radius: 20px; /* Arrondir les coins pour correspondre à la nouvelle taille */
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px; /* Ajuste la hauteur du curseur */
+    width: 16px; /* Ajuste la largeur du curseur */
+    border-radius: 50%;
+    left: 2px; /* Réduit la marge à gauche */
+    bottom: 2px; /* Réduit la marge en bas */
+    background-color: rgb(125, 115, 115);
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #d6d0d0;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(20px); /* Ajuste le décalage du curseur pour la nouvelle taille */
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 20px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  
+
+  /*************************************************/
+  

@@ -1,58 +1,16 @@
-/*import React from "react";
-import { Link } from "react-router-dom";
-import "./NavBar.css";
-
-function NavBar() {
-  return (
-    <>
-      <nav className="navbar navbar-dark bg-dark">
-        <div className="container-fluid">
-          <Link to="/Convertion">
-            <img
-              src="https://avepdf.com/images/text-to-pdf-rating.png"
-              alt="Logo"
-              style={{ width: "60px", height: "auto" }}
-            />
-          </Link>
-
-          <span className="navbar-brand mb-0 h1">TEXT TO PDF</span>
-
-          <Link to="/login">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="40px"
-              height="auto"
-              fill="currentColor"
-              className="bi bi-box-arrow-in-right"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"
-              />
-              <path
-                fill-rule="evenodd"
-                d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
-              />
-            </svg>
-          </Link>
-        </div>
-      </nav>
-    </>
-  );
-}
-
-export default NavBar;*/
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Sidebar from "./Sidebar";
 import "./NavBar.css";
+import { FaCode, FaFilePdf, FaProjectDiagram, FaSignOutAlt } from "react-icons/fa";
 
 interface NavBarProps {
   token: () => void;
 }
 
 const NavBar: React.FC<NavBarProps> = (props) => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
   const logMeOut = (): void => {
@@ -62,8 +20,9 @@ const NavBar: React.FC<NavBarProps> = (props) => {
     })
       .then((response) => {
         props.token();
-        localStorage.removeItem('email');
-        navigate("/");      })
+        localStorage.removeItem("email");
+        navigate("/");
+      })
       .catch((error: any) => {
         if (error.response) {
           console.log(error.response);
@@ -77,13 +36,21 @@ const NavBar: React.FC<NavBarProps> = (props) => {
     navigate("/");
   };
 
-  const logged = localStorage.getItem('email');
+  const logged = localStorage.getItem("email");
+
+  const toggleSidebar = (): void => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  const closeSidebar = (): void => {
+    setSidebarOpen(false);
+  };
 
   return (
     <>
-      <nav className="navbar navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
-          <Link to="/Convertion">
+          <Link to="/Convertion" className="navbar-brand">
             <img
               src="https://avepdf.com/images/text-to-pdf-rating.png"
               alt="Logo"
@@ -91,36 +58,73 @@ const NavBar: React.FC<NavBarProps> = (props) => {
             />
           </Link>
 
-          <div className="navbar-brand">
-            <span className="mb-0 h3"></span>
+
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <div className="navbar-nav d-flex justify-content-center w-100">
+              {logged ? (
+                <>
+                  <Link to="/profile" className="nav-link mx-3">
+                    <FaProjectDiagram className="icon" /> Project
+                  </Link>
+                  <Link to="/Compilateur" className="nav-link mx-3">
+                    <FaCode className="icon" /> Compilateur
+                  </Link>
+                  <Link to="/Convertion" className="nav-link mx-3">
+                    <FaFilePdf className="icon" /> Convertion TTP
+                  </Link>
+                </>
+              ) : null}
+            </div>
           </div>
 
-          <div className="navbar-buttons">
+          <div className="d-flex">
             {logged ? (
               <>
-                <Link to="/profile" className="btn btn-outline-info">
-                  Project
-                </Link>
-                <Link to="/Compilateur" className="btn btn-outline-success">
-                    Compilateur
-                </Link>
-                <Link to="/Convertion" className="btn btn-outline-success">
-              Convertion TTP
-          </Link>
-                <button className="btn btn-outline-danger" type="button" onClick={logMeOut}>
-                  Logout
+                <button
+                  type="button"
+                  onClick={logMeOut}
+                  className="logout-button"
+                >
+                  <FaSignOutAlt className="icon" />
                 </button>
-     
-         
+               
+          <button
+            className="navbar-toggler"
+            type="button"
+            onClick={toggleSidebar}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-layout-text-sidebar-reverse"
+              viewBox="0 0 16 16"
+            >
+              <path d="M12.5 3a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zm0 3a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zm.5 3.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5m-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z" />
+              <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zM4 1v14H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm1 0h9a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5z" />
+            </svg>
+          </button>
               </>
             ) : (
-              <button className="btn btn-outline-success" type="button" onClick={showLogin}>
+              <button
+                className="btn btn-outline-success"
+                type="button"
+                onClick={showLogin}
+              >
                 Login
               </button>
             )}
           </div>
         </div>
       </nav>
+
+      <Sidebar
+        show={sidebarOpen}
+        onClose={closeSidebar}
+        logged={!!logged}
+        logMeOut={logMeOut}
+      />
     </>
   );
 };
